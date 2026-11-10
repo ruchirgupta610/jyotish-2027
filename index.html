@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=1100, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>2027 Vedic Planetary Transits & Kundli Simulator</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -333,6 +333,20 @@
 
     .btn:active {
       transform: translateY(1px);
+    }
+
+    .btn:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+      border-color: var(--border-card);
+      pointer-events: none;
+    }
+
+    .btn:disabled:hover {
+      background: #1c273c;
+      color: var(--text-primary);
+      border-color: var(--border-light);
+      transform: none;
     }
 
     /* Right Column (60%): Live Status Table + Current Highlight Box */
@@ -1534,6 +1548,13 @@
       }
 
       updateActiveEventDisplay() {
+        if (this.dom.btnPrev) {
+          this.dom.btnPrev.disabled = (this.activeEventIndex <= -1);
+        }
+        if (this.dom.btnNext) {
+          this.dom.btnNext.disabled = (this.activeEventIndex >= PLANETARY_EVENTS_2027.length - 1);
+        }
+
         if (this.activeEventIndex === -1) {
           if (this.dom.displayDateTop) this.dom.displayDateTop.textContent = "2027-01-01";
           return;
@@ -1557,6 +1578,11 @@
               behavior: "smooth"
             });
           }
+        } else if (this.activeEventIndex === -1 && this.dom.eventsList) {
+          this.dom.eventsList.scrollTo({
+            top: 0,
+            behavior: "smooth"
+          });
         }
       }
     }
