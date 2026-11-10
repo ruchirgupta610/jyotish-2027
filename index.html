@@ -329,112 +329,12 @@
       padding: 7px 12px;
     }
 
-    /* Prediction Card */
-    .prediction-card {
-      background: var(--bg-surface);
-      border-radius: 8px;
-      padding: 14px 18px;
-      border-left: 4px solid var(--gold-line);
-    }
-
-    .prediction-header {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 4px;
-    }
-
-    .rashi-indicator {
-      font-weight: 700;
-      color: #fbbf24;
-      font-size: 0.88rem;
-    }
-
-    .prediction-tag {
-      font-size: 0.72rem;
-      color: var(--text-muted);
-      text-transform: uppercase;
-    }
-
-    .prediction-text {
-      font-size: 0.88rem;
-      color: #cbd5e1;
-      line-height: 1.5;
-    }
-
-    /* Top Right Section: Events Feed & Filters */
+    /* Top Right Section: Events Feed */
     .events-section-col {
       display: flex;
       flex-direction: column;
       gap: 12px;
       height: 100%;
-    }
-
-    .bottom-filter-box {
-      background: var(--bg-card);
-      padding: 14px 18px;
-      border-radius: 12px;
-      border: 1px solid var(--border-card);
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .filter-row-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-
-    .filter-sub-group {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-
-    .filter-heading {
-      font-size: 0.72rem;
-      font-weight: 700;
-      color: var(--text-muted);
-      letter-spacing: 0.5px;
-    }
-
-    .filter-tip {
-      font-size: 0.72rem;
-      font-family: var(--font-mono);
-      color: #38bdf8;
-    }
-
-    .planet-filters, .type-filters {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-    }
-
-    .chip-filter, .type-btn {
-      background: var(--bg-surface);
-      border: 1px solid var(--border-light);
-      color: var(--text-muted);
-      padding: 5px 11px;
-      border-radius: 6px;
-      font-size: 0.78rem;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      user-select: none;
-    }
-
-    .chip-filter:hover, .type-btn:hover {
-      color: var(--text-primary);
-      border-color: var(--gold-line);
-    }
-
-    .chip-filter.active, .type-btn.active {
-      background: #d97706;
-      border-color: #f59e0b;
-      color: #111;
-      font-weight: 700;
     }
 
     .event-feed-wrapper-full {
@@ -1031,8 +931,12 @@
             </div>
             <p id="predictionText" class="prediction-text">Select an event or press Next to inspect predictive transit effects for this sign.</p>
           </div>
-
-          <!-- Chart Header & Legend -->
+    <!-- Mid Section: Two Columns (Left Chart, Right Events List) -->
+    <main class="workspace-grid">
+      <!-- Left Column: Chart Card -->
+      <section class="chart-section">
+        <div class="chart-card">
+          <!-- 1. Chart Header & Legend -->
           <div class="chart-header">
             <span class="chart-tag">● NORTH INDIAN KUNDLI (BHAVA-FIXED)</span>
             <div class="legend-pills">
@@ -1045,7 +949,7 @@
             </div>
           </div>
 
-          <!-- SVG Canvas Stage -->
+          <!-- 2. SVG Canvas Stage -->
           <div class="svg-stage-wrapper">
             <div id="rippleOverlay" class="ripple-overlay-layer"></div>
             <svg id="kundliSvg" viewBox="0 0 1000 1000" class="kundli-svg">
@@ -1060,43 +964,39 @@
               <g id="grahaLayer" class="grahas-layer"></g>
             </svg>
           </div>
+
+          <!-- 3. Chart Controls Panel (Directly Below SVG Stage) -->
+          <div class="chart-controls-panel">
+            <div class="rashi-control-group">
+              <label for="lagnaSelect">Lagna / Moon Ref:</label>
+              <select id="lagnaSelect" class="styled-select">
+                <option value="1" selected>1. Mesha (Aries)</option>
+                <option value="2">2. Vrishabha (Taurus)</option>
+                <option value="3">3. Mithuna (Gemini)</option>
+                <option value="4">4. Karka (Cancer)</option>
+                <option value="5">5. Simha (Leo)</option>
+                <option value="6">6. Kanya (Virgo)</option>
+                <option value="7">7. Tula (Libra)</option>
+                <option value="8">8. Vrishchika (Scorpio)</option>
+                <option value="9">9. Dhanu (Sagittarius)</option>
+                <option value="10">10. Makara (Capricorn)</option>
+                <option value="11">11. Kumbha (Aquarius)</option>
+                <option value="12">12. Meena (Pisces)</option>
+              </select>
+            </div>
+
+            <div class="playback-controls-group">
+              <button id="btnPrev" class="btn" title="Previous Event (Left Arrow)">◀ Prev</button>
+              <button id="btnPlay" class="btn btn-primary" title="Play/Pause (Spacebar)">▶ Play</button>
+              <button id="btnNext" class="btn" title="Next Event (Right Arrow)">Next ▶</button>
+              <button id="btnReset" class="btn btn-icon" title="Reset to Jan 1, 2027">↺ Reset</button>
+            </div>
+          </div>
         </div>
       </section>
 
-      <!-- Right Column: Filter Box & Chronological Events Feed -->
+      <!-- Right Column: Chronological Events Feed -->
       <section class="events-section-col">
-        <div class="bottom-filter-box">
-          <div class="filter-row-top">
-            <div class="filter-sub-group">
-              <span class="filter-heading">FILTER PLANETS:</span>
-              <div class="planet-filters" id="planetFilters">
-                <button class="chip-filter active" data-planet="ALL">All Planets</button>
-                <button class="chip-filter" data-planet="Sun">☉ Sun</button>
-                <button class="chip-filter" data-planet="Mars">♂ Mars</button>
-                <button class="chip-filter" data-planet="Mercury">☿ Mercury</button>
-                <button class="chip-filter" data-planet="Jupiter">♃ Jupiter</button>
-                <button class="chip-filter" data-planet="Venus">♀ Venus</button>
-                <button class="chip-filter" data-planet="Saturn">♄ Saturn</button>
-                <button class="chip-filter" data-planet="Rahu">☊ Rahu</button>
-                <button class="chip-filter" data-planet="Ketu">☋ Ketu</button>
-              </div>
-            </div>
-
-            <span class="filter-tip" id="filterStatusText">Showing All 91 Events</span>
-          </div>
-
-          <div class="filter-sub-group">
-            <span class="filter-heading">EVENT CATEGORY:</span>
-            <div class="type-filters" id="typeFilters">
-              <button class="type-btn active" data-type="ALL">All Events</button>
-              <button class="type-btn" data-type="TRANSIT">Transits (Rashi Change)</button>
-              <button class="type-btn" data-type="RETROGRADE">Retrograde / Direct</button>
-              <button class="type-btn" data-type="COMBUSTION">Asta / Udaya</button>
-              <button class="type-btn" data-type="GRAHAN">Eclipses (Grahan)</button>
-            </div>
-          </div>
-        </div>
-
         <div class="event-feed-wrapper-full">
           <div class="event-feed-header">
             <span>2027 FULL CHRONOLOGICAL TIMELINE (DRIK PANCHANG)</span>
@@ -1294,21 +1194,6 @@
       { id: "EV-91", date: "2027-12-27 01:08 PM", planet: "Mars", changeType: "TRANSIT", fromRashi: 9, toRashi: 10, title: "Mars enters Makara (10) (Uchcha)", details: "Mars enters Capricorn, its highest sign of exaltation.", yoga: "Mangal Uchha (Ruchaka Yoga)", isGrahan: false, isSuryaGrahan: false }
     ];
 
-    const HOUSE_THEMES = {
-      1: "1st House: Personal vitality, self-confidence, mental drive, and renewed public presence.",
-      2: "2nd House: Financial stability, family resources, liquid assets, and speech influence.",
-      3: "3rd House: Bold enterprise, communications, sibling rapport, and courageous technical ventures.",
-      4: "4th House: Domestic peace, home environment, property matters, and emotional security.",
-      5: "5th House: Creative intellect, analytical coding, speculative wisdom, and educational joy.",
-      6: "6th House: Triumph over adversaries, problem solving, debt clearance, and routine discipline.",
-      7: "7th House: Public contracts, relationship harmony, marital bonding, and commercial negotiations.",
-      8: "8th House: Deep research, occult insights, secret settlements, and protective transformation.",
-      9: "9th House: Divine fortune, fatherly grace, philosophical clarity, and long-range pilgrimages.",
-      10: "10th House: Career zenith, executive authority, recognition from superiors, and leadership.",
-      11: "11th House: Inflow of monetary gains, expansion of network circles, and realization of desires.",
-      12: "12th House: Spiritual retreat, foreign opportunities, philanthropic deeds, and expenditure control."
-    };
-
     function easeOutCubic(t) {
       return 1 - Math.pow(1 - t, 3);
     }
@@ -1318,8 +1203,6 @@
       constructor() {
         this.selectedLagna = 1;
         this.activeEventIndex = -1;
-        this.selectedPlanets = new Set();
-        this.selectedTypeFilter = "ALL";
         this.isPlaying = false;
         this.playTimer = null;
 
@@ -1343,10 +1226,7 @@
           btnNext: document.getElementById("btnNext"),
           btnReset: document.getElementById("btnReset"),
           displayDateTop: document.getElementById("displayDateTop"),
-          predictionRashiName: document.getElementById("predictionRashiName"),
-          predictionText: document.getElementById("predictionText"),
           eventCountBadge: document.getElementById("eventCountBadge"),
-          filterStatusText: document.getElementById("filterStatusText"),
           eventsList: document.getElementById("eventsList"),
           kundliSvg: document.getElementById("kundliSvg"),
           houseRashiNumbers: document.getElementById("houseRashiNumbers"),
@@ -1364,7 +1244,6 @@
             this.renderHouseRashiLabels();
             this.renderKundliChart(true);
             this.renderPlanetaryTable();
-            this.updatePredictionCard();
           });
         }
 
@@ -1382,58 +1261,6 @@
             this.togglePlay();
           }
         });
-
-        const planetFiltersContainer = document.getElementById("planetFilters");
-        if (planetFiltersContainer) {
-          planetFiltersContainer.addEventListener("click", (e) => {
-            const chip = e.target.closest(".chip-filter");
-            if (!chip) return;
-
-            const planet = chip.dataset.planet;
-            if (planet === "ALL") {
-              this.selectedPlanets.clear();
-              document.querySelectorAll(".chip-filter").forEach(c => c.classList.remove("active"));
-              chip.classList.add("active");
-            } else {
-              const allBtn = document.querySelector('.chip-filter[data-planet="ALL"]');
-              if (allBtn) allBtn.classList.remove("active");
-
-              if (this.selectedPlanets.has(planet)) {
-                this.selectedPlanets.delete(planet);
-                chip.classList.remove("active");
-              } else {
-                this.selectedPlanets.add(planet);
-                chip.classList.add("active");
-              }
-              if (this.selectedPlanets.size === 0 && allBtn) {
-                allBtn.classList.add("active");
-              }
-            }
-            this.updateFilterStatusText();
-            this.filterEventsList();
-          });
-        }
-
-        const typeFiltersContainer = document.getElementById("typeFilters");
-        if (typeFiltersContainer) {
-          typeFiltersContainer.addEventListener("click", (e) => {
-            const btn = e.target.closest(".type-btn");
-            if (!btn) return;
-            document.querySelectorAll(".type-btn").forEach(b => b.classList.remove("active"));
-            btn.classList.add("active");
-            this.selectedTypeFilter = btn.dataset.type;
-            this.filterEventsList();
-          });
-        }
-      }
-
-      updateFilterStatusText() {
-        if (!this.dom.filterStatusText) return;
-        if (this.selectedPlanets.size === 0) {
-          this.dom.filterStatusText.textContent = "Showing All 91 Events";
-        } else {
-          this.dom.filterStatusText.textContent = `Filtered: ${Array.from(this.selectedPlanets).join(", ")}`;
-        }
       }
 
       getHouseFromRashi(rashi) {
@@ -1792,8 +1619,6 @@
           item.className = "event-item";
           item.id = `event-card-${idx}`;
           item.dataset.index = idx;
-          item.dataset.planet = event.planet;
-          item.dataset.type = event.changeType;
 
           const badgeClass = {
             TRANSIT: "badge-transit",
@@ -1827,36 +1652,8 @@
           this.dom.eventsList.appendChild(item);
         });
 
-        this.filterEventsList();
-      }
-
-      filterEventsList() {
-        let visibleCount = 0;
-        const items = document.querySelectorAll(".event-item");
-
-        items.forEach(item => {
-          const planet = item.dataset.planet;
-          const type = item.dataset.type;
-
-          const planetMatch = (this.selectedPlanets.size === 0 || this.selectedPlanets.has(planet));
-          let typeMatch = false;
-
-          if (this.selectedTypeFilter === "ALL") typeMatch = true;
-          else if (this.selectedTypeFilter === "TRANSIT" && type === "TRANSIT") typeMatch = true;
-          else if (this.selectedTypeFilter === "RETROGRADE" && (type === "RETROGRADE" || type === "DIRECT")) typeMatch = true;
-          else if (this.selectedTypeFilter === "COMBUSTION" && (type === "COMBUSTION_ON" || type === "COMBUSTION_OFF")) typeMatch = true;
-          else if (this.selectedTypeFilter === "GRAHAN" && (type === "GRAHAN" || type === "GRAHAN_END")) typeMatch = true;
-
-          if (planetMatch && typeMatch) {
-            item.style.display = "block";
-            visibleCount++;
-          } else {
-            item.style.display = "none";
-          }
-        });
-
         if (this.dom.eventCountBadge) {
-          this.dom.eventCountBadge.textContent = `${visibleCount} events`;
+          this.dom.eventCountBadge.textContent = `${PLANETARY_EVENTS_2027.length} events`;
         }
       }
 
@@ -1889,7 +1686,6 @@
         this.renderKundliChart(true);
         this.renderPlanetaryTable();
         this.highlightActiveEventCard();
-        this.updatePredictionCard();
       }
 
       resetTimeline() {
@@ -1938,38 +1734,6 @@
             });
           }
         }
-      }
-
-      updatePredictionCard() {
-        if (!this.dom.predictionRashiName || !this.dom.predictionText) return;
-
-        const rashiName = RASHI_NAMES[this.selectedLagna];
-        this.dom.predictionRashiName.textContent = `${rashiName} Prediction`;
-
-        if (this.activeEventIndex === -1) {
-          this.dom.predictionText.textContent = `Default baseline setup for ${rashiName}. Step through the 2027 events timeline to inspect specific transit effects for your Lagna.`;
-          return;
-        }
-
-        const ev = PLANETARY_EVENTS_2027[this.activeEventIndex];
-        const planetRashi = this.currentState[ev.planet]?.rashi || ev.toRashi || ev.fromRashi;
-        const targetHouse = this.getHouseFromRashi(planetRashi);
-
-        let dignityNote = "";
-        if (UCHCHA_RASHIS[ev.planet] === planetRashi) {
-          dignityNote = " [Exalted (Uchcha ⬆): Brings peak auspicious results, authority, and prosperity.]";
-        } else if (NEECHA_RASHIS[ev.planet] === planetRashi) {
-          dignityNote = " [Debilitated (Neecha ⬇): Requires caution, humility, and balanced efforts.]";
-        }
-
-        let eclipseNote = "";
-        if (ev.isSuryaGrahan) {
-          eclipseNote = " [Surya Grahan: Practice meditation, avoid impulsive beginnings.]";
-        } else if (ev.changeType === "GRAHAN_END") {
-          eclipseNote = " [Grahan Moksha: Solar radiance restored, unblocking positive energies.]";
-        }
-
-        this.dom.predictionText.textContent = `${ev.planet} transit influence in House ${targetHouse}: ${HOUSE_THEMES[targetHouse]}${dignityNote}${eclipseNote}`;
       }
     }
 
