@@ -59,6 +59,8 @@
       padding: 12px 22px;
       border-radius: 12px;
       border: 1px solid var(--border-card);
+      flex-wrap: wrap;
+      gap: 10px;
     }
 
     .brand {
@@ -78,6 +80,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      flex-shrink: 0;
     }
 
     .brand h1 {
@@ -88,6 +91,7 @@
       display: flex;
       align-items: center;
       gap: 8px;
+      flex-wrap: wrap;
     }
 
     .badge-accent {
@@ -114,14 +118,21 @@
       padding: 6px 14px;
       border-radius: 6px;
       border: 1px solid var(--border-light);
+      display: inline-block;
     }
 
-    /* 2. Workspace Grid: 2 Columns on Desktop, Stacks <= 1024px */
+    /* 2. Workspace Grid: 40% Chart - 60% Status Table on Desktop, Stacks <= 1024px */
     .workspace-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 40% calc(60% - 16px);
       gap: 16px;
       align-items: stretch;
+    }
+
+    @media (max-width: 1120px) {
+      .workspace-grid {
+        grid-template-columns: 42% calc(58% - 16px);
+      }
     }
 
     @media (max-width: 1024px) {
@@ -130,7 +141,7 @@
       }
     }
 
-    /* Left Column: Chart Card */
+    /* Left Column (40%): Chart Card */
     .chart-card {
       background: var(--bg-card);
       border-radius: 12px;
@@ -158,8 +169,8 @@
 
     .legend-pills {
       display: flex;
-      gap: 12px;
-      font-size: 0.74rem;
+      gap: 10px;
+      font-size: 0.72rem;
       color: var(--text-muted);
       flex-wrap: wrap;
     }
@@ -171,8 +182,8 @@
     }
 
     .motion-dot {
-      width: 9px;
-      height: 9px;
+      width: 8px;
+      height: 8px;
       border-radius: 50%;
       display: inline-block;
     }
@@ -183,7 +194,7 @@
     .svg-stage-wrapper {
       width: 100%;
       aspect-ratio: 1 / 1;
-      max-width: 580px;
+      max-width: 540px;
       margin: 0 auto;
       background: radial-gradient(circle at center, #111a2d, #060911);
       border-radius: 8px;
@@ -237,24 +248,24 @@
       overflow: visible;
     }
 
-    /* Chart Controls Directly Below SVG Canvas */
+    /* Chart Controls Directly Below SVG Canvas (Prev/Next Only) */
     .chart-controls-panel {
       background: var(--bg-surface);
       border: 1px solid var(--border-card);
       border-radius: 10px;
-      padding: 12px 16px;
+      padding: 10px 14px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       flex-wrap: wrap;
-      gap: 12px;
+      gap: 10px;
     }
 
     .rashi-control-group {
       display: flex;
       align-items: center;
       gap: 8px;
-      font-size: 0.86rem;
+      font-size: 0.84rem;
       color: var(--text-muted);
     }
 
@@ -263,8 +274,8 @@
       color: #fbbf24;
       border: 1px solid var(--gold-line);
       border-radius: 6px;
-      padding: 7px 12px;
-      font-size: 0.88rem;
+      padding: 6px 10px;
+      font-size: 0.84rem;
       font-weight: 600;
       outline: none;
       cursor: pointer;
@@ -284,35 +295,170 @@
       background: #1c273c;
       color: var(--text-primary);
       border: 1px solid var(--border-light);
-      padding: 7px 14px;
+      padding: 7px 16px;
       border-radius: 6px;
       font-size: 0.84rem;
       font-weight: 600;
       cursor: pointer;
       transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      user-select: none;
     }
 
     .btn:hover {
       background: #273752;
       border-color: var(--gold-line);
+      color: #fbbf24;
     }
 
-    .btn-primary {
-      background: #d97706;
-      border-color: #f59e0b;
-      color: #111;
+    .btn:active {
+      transform: translateY(1px);
+    }
+
+    /* Right Column (60%): Live Status Table + Current Highlight Card Below */
+    .right-column-container {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .status-table-card {
+      background: var(--bg-card);
+      border-radius: 12px;
+      border: 1px solid var(--border-card);
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .status-table-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .table-title {
+      font-family: var(--font-heading);
+      font-size: 1.05rem;
+      color: #fbbf24;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .active-index {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .table-container {
+      overflow-x: auto;
+      border-radius: 8px;
+      border: 1px solid var(--border-card);
+      background: #090e1a;
+    }
+
+    .graha-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.84rem;
+      min-width: 620px;
+    }
+
+    .graha-table th {
+      background: #111a2d;
+      color: var(--text-muted);
+      padding: 10px 12px;
       font-weight: 700;
+      border-bottom: 1px solid var(--border-card);
+      text-transform: uppercase;
+      font-size: 0.72rem;
+      letter-spacing: 0.5px;
+      white-space: nowrap;
     }
 
-    .btn-primary:hover {
-      background: #f59e0b;
+    .graha-table td {
+      padding: 9px 12px;
+      border-bottom: 1px solid #141f33;
+      color: var(--text-primary);
+      white-space: nowrap;
+      vertical-align: middle;
     }
 
-    .btn-icon {
-      padding: 7px 12px;
+    .graha-row {
+      transition: background 0.25s ease;
     }
 
-    /* Right Column: Events Feed */
+    .graha-row:hover {
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .graha-row-highlight {
+      background: rgba(245, 158, 11, 0.18) !important;
+      box-shadow: inset 4px 0 0 #f59e0b;
+      font-weight: 600;
+    }
+
+    .graha-row-highlight td {
+      color: #fff !important;
+    }
+
+    .badge-status {
+      display: inline-block;
+      padding: 2px 7px;
+      border-radius: 4px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .badge-uchha-tbl { background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid #059669; }
+    .badge-neecha-tbl { background: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid #dc2626; }
+    .badge-swakshetra-tbl { background: rgba(56, 189, 248, 0.2); color: #38bdf8; border: 1px solid #0284c7; }
+    .badge-combust-tbl { background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid #d97706; }
+    .badge-retro-tbl { background: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid #dc2626; }
+    .badge-direct-tbl { background: rgba(59, 130, 246, 0.2); color: #60a5fa; border: 1px solid #2563eb; }
+    .badge-grahan-tbl { background: rgba(220, 38, 38, 0.25); color: #f87171; border: 1px solid #b91c1c; }
+
+    /* Current Event Spotlight Card Directly Below the Table */
+    .current-event-spotlight {
+      background: var(--bg-card);
+      border-radius: 12px;
+      border: 1px solid var(--border-card);
+      padding: 12px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .spotlight-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.74rem;
+      font-weight: 700;
+      color: #f59e0b;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    .spotlight-card-content {
+      /* Will contain the active .event-item clone */
+    }
+
+    /* 3. Bottom Section: List of Events (Replaced table position) */
+    .bottom-events-section {
+      width: 100%;
+    }
+
     .events-feed-wrapper {
       background: var(--bg-card);
       border-radius: 12px;
@@ -320,12 +466,11 @@
       display: flex;
       flex-direction: column;
       overflow: hidden;
-      height: 100%;
-      min-height: 540px;
+      max-height: 460px;
     }
 
     .event-feed-header {
-      padding: 14px 18px;
+      padding: 12px 18px;
       background: #111a2d;
       border-bottom: 1px solid var(--border-card);
       display: flex;
@@ -339,11 +484,10 @@
 
     .events-single-list {
       overflow-y: auto;
-      padding: 12px;
+      padding: 14px;
       display: flex;
       flex-direction: column;
       gap: 10px;
-      flex: 1;
     }
 
     .event-item {
@@ -364,7 +508,13 @@
     .event-item.active-event {
       border: 1.5px solid #f59e0b;
       background: #23314c;
-      box-shadow: 0 0 12px rgba(245, 158, 11, 0.2);
+      box-shadow: 0 0 14px rgba(245, 158, 11, 0.25);
+    }
+
+    .event-item-standalone {
+      cursor: default;
+      background: #182338;
+      border: 1.5px solid #f59e0b;
     }
 
     .event-meta-line {
@@ -372,6 +522,8 @@
       justify-content: space-between;
       align-items: center;
       margin-bottom: 5px;
+      flex-wrap: wrap;
+      gap: 4px;
     }
 
     .planet-chip {
@@ -415,112 +567,6 @@
       color: var(--text-muted);
       line-height: 1.4;
     }
-
-    /* 3. Bottom Section: Full-Width Status Table */
-    .table-section {
-      width: 100%;
-    }
-
-    .status-table-card {
-      background: var(--bg-card);
-      border-radius: 12px;
-      border: 1px solid var(--border-card);
-      padding: 16px;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .status-table-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 12px;
-    }
-
-    .table-title {
-      font-family: var(--font-heading);
-      font-size: 1.1rem;
-      color: #fbbf24;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .active-index {
-      font-family: var(--font-mono);
-      font-size: 0.8rem;
-      color: var(--text-muted);
-    }
-
-    .table-container {
-      overflow-x: auto;
-      border-radius: 8px;
-      border: 1px solid var(--border-card);
-      background: #090e1a;
-    }
-
-    .graha-table {
-      width: 100%;
-      border-collapse: collapse;
-      text-align: left;
-      font-size: 0.84rem;
-      min-width: 780px;
-    }
-
-    .graha-table th {
-      background: #111a2d;
-      color: var(--text-muted);
-      padding: 11px 14px;
-      font-weight: 700;
-      border-bottom: 1px solid var(--border-card);
-      text-transform: uppercase;
-      font-size: 0.72rem;
-      letter-spacing: 0.5px;
-      white-space: nowrap;
-    }
-
-    .graha-table td {
-      padding: 10px 14px;
-      border-bottom: 1px solid #141f33;
-      color: var(--text-primary);
-      white-space: nowrap;
-      vertical-align: middle;
-    }
-
-    .graha-row {
-      transition: background 0.25s ease;
-    }
-
-    .graha-row:hover {
-      background: rgba(255, 255, 255, 0.02);
-    }
-
-    .graha-row-highlight {
-      background: rgba(245, 158, 11, 0.18) !important;
-      box-shadow: inset 4px 0 0 #f59e0b;
-      font-weight: 600;
-    }
-
-    .graha-row-highlight td {
-      color: #fff !important;
-    }
-
-    .badge-status {
-      display: inline-block;
-      padding: 2px 7px;
-      border-radius: 4px;
-      font-size: 0.72rem;
-      font-weight: 700;
-      white-space: nowrap;
-    }
-
-    .badge-uchha-tbl { background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid #059669; }
-    .badge-neecha-tbl { background: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid #dc2626; }
-    .badge-swakshetra-tbl { background: rgba(56, 189, 248, 0.2); color: #38bdf8; border: 1px solid #0284c7; }
-    .badge-combust-tbl { background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid #d97706; }
-    .badge-retro-tbl { background: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid #dc2626; }
-    .badge-direct-tbl { background: rgba(59, 130, 246, 0.2); color: #60a5fa; border: 1px solid #2563eb; }
-    .badge-grahan-tbl { background: rgba(220, 38, 38, 0.25); color: #f87171; border: 1px solid #b91c1c; }
 
     /* SVG Elements */
     .rashi-label-text {
@@ -608,7 +654,7 @@
       opacity: 0.85 !important;
     }
 
-    /* Dignity Badges (⬆ and ⬇) */
+    /* Dignity Badges */
     .dignity-badge-uchha circle {
       fill: #059669;
       stroke: #ffffff;
@@ -663,7 +709,7 @@
       color: var(--text-muted);
       font-size: 0.84rem;
       border-top: 1px solid var(--border-card);
-      margin-top: 8px;
+      margin-top: 4px;
     }
 
     .footer-sub {
@@ -689,11 +735,11 @@
       </div>
     </header>
 
-    <!-- 2. Main Workspace: 2 Balanced Columns -->
+    <!-- 2. Main Workspace: 40% Chart - 60% Status Table on Desktop -->
     <main class="workspace-grid">
-      <!-- Left Column: Chart Card -->
+      <!-- Left Column (40%): Chart Card -->
       <section class="chart-card">
-        <!-- a. Chart Header with Legend -->
+        <!-- Chart Header with Legend -->
         <div class="chart-header">
           <span class="chart-tag">● NORTH INDIAN KUNDLI (BHAVA-FIXED)</span>
           <div class="legend-pills">
@@ -706,7 +752,7 @@
           </div>
         </div>
 
-        <!-- b. SVG Stage Wrapper -->
+        <!-- SVG Stage Wrapper -->
         <div class="svg-stage-wrapper">
           <div id="rippleOverlay" class="ripple-overlay-layer"></div>
           <svg id="kundliSvg" viewBox="0 0 1000 1000" class="kundli-svg">
@@ -722,7 +768,7 @@
           </svg>
         </div>
 
-        <!-- c. Chart Controls Panel (Directly Below SVG Stage) -->
+        <!-- Chart Controls Directly Below SVG Stage (Prev / Next only) -->
         <div class="chart-controls-panel">
           <div class="rashi-control-group">
             <label for="lagnaSelect">Lagna / Moon Ref:</label>
@@ -744,56 +790,67 @@
 
           <div class="playback-controls-group">
             <button id="btnPrev" class="btn" title="Previous Event (Left Arrow)">◀ Prev</button>
-            <button id="btnPlay" class="btn btn-primary" title="Play/Pause (Spacebar)">▶ Play</button>
             <button id="btnNext" class="btn" title="Next Event (Right Arrow)">Next ▶</button>
-            <button id="btnReset" class="btn btn-icon" title="Reset to Jan 1, 2027">↺ Reset</button>
           </div>
         </div>
       </section>
 
-      <!-- Right Column: Single Column Events Feed -->
-      <section class="events-feed-wrapper">
+      <!-- Right Column (60%): Shifted Planetary Status Table & Active Event Spotlight Below It -->
+      <section class="right-column-container">
+        <div class="status-table-card">
+          <div class="status-table-header">
+            <h3 class="table-title">🪐 LIVE PLANETARY POSITIONS & CONDITIONS</h3>
+            <span class="active-index" id="activeGrahaHighlightBadge">Baseline Positions</span>
+          </div>
+
+          <div class="table-container">
+            <table class="graha-table">
+              <thead>
+                <tr>
+                  <th style="width: 16%;">Planet</th>
+                  <th style="width: 22%;">Current Rashi</th>
+                  <th style="width: 10%;">House</th>
+                  <th style="width: 14%;">Motion</th>
+                  <th style="width: 14%;">Dignity</th>
+                  <th style="width: 12%;">Combust</th>
+                  <th style="width: 12%;">Eclipse</th>
+                </tr>
+              </thead>
+              <tbody id="grahaTableBody">
+                <!-- Dynamically populated rows -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Dedicated Container Below Table showing the Current Event's event-item div -->
+        <div class="current-event-spotlight">
+          <div class="spotlight-header">
+            <span>Highlighted Event (Active In Chart & Table)</span>
+            <span id="spotlightIndexTag" style="font-family:var(--font-mono);">Baseline</span>
+          </div>
+          <div id="activeEventSpotlightBox" class="spotlight-card-content">
+            <!-- Active event item dynamically cloned here -->
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- 3. Bottom Section: List of Events (Replaced former Table section) -->
+    <section class="bottom-events-section">
+      <div class="events-feed-wrapper">
         <div class="event-feed-header">
           <span>2027 FULL CHRONOLOGICAL TIMELINE (DRIK PANCHANG)</span>
           <span id="eventCountBadge">91 events</span>
         </div>
         <div id="eventsList" class="events-single-list"></div>
-      </section>
-    </main>
-
-    <!-- 3. Bottom Section: Full Width Planetary Status Table -->
-    <section class="table-section">
-      <div class="status-table-card">
-        <div class="status-table-header">
-          <h3 class="table-title">🪐 LIVE PLANETARY POSITIONS & CONDITIONS</h3>
-          <span class="active-index" id="activeGrahaHighlightBadge">Baseline Positions</span>
-        </div>
-
-        <div class="table-container">
-          <table class="graha-table">
-            <thead>
-              <tr>
-                <th style="width: 16%;">Planet</th>
-                <th style="width: 22%;">Current Rashi</th>
-                <th style="width: 10%;">House</th>
-                <th style="width: 13%;">Motion</th>
-                <th style="width: 15%;">Dignity</th>
-                <th style="width: 12%;">Combustion</th>
-                <th style="width: 12%;">Eclipse</th>
-              </tr>
-            </thead>
-            <tbody id="grahaTableBody">
-              <!-- Dynamically populated rows -->
-            </tbody>
-          </table>
-        </div>
       </div>
     </section>
 
     <!-- Footer -->
     <footer class="app-footer">
       <p>© 2026 Ruchir Gupta. Released under the MIT License.</p>
-      <p class="footer-sub">Nirayana Lahiri Ephemeris & Gochara Engine. Built for fun & open-source exploration.</p>
+      <p class="footer-sub">Nirayana Lahiri Ephemeris & Gochara Engine. Built for Vedic astrology exploration.</p>
     </footer>
   </div>
 
@@ -958,8 +1015,6 @@
       constructor() {
         this.selectedLagna = 1;
         this.activeEventIndex = -1;
-        this.isPlaying = false;
-        this.playTimer = null;
 
         this.planetPositions = {};
         this.activeAnimations = {};
@@ -977,9 +1032,7 @@
         this.dom = {
           lagnaSelect: document.getElementById("lagnaSelect"),
           btnPrev: document.getElementById("btnPrev"),
-          btnPlay: document.getElementById("btnPlay"),
           btnNext: document.getElementById("btnNext"),
-          btnReset: document.getElementById("btnReset"),
           displayDateTop: document.getElementById("displayDateTop"),
           eventCountBadge: document.getElementById("eventCountBadge"),
           eventsList: document.getElementById("eventsList"),
@@ -988,7 +1041,9 @@
           grahaLayer: document.getElementById("grahaLayer"),
           rippleOverlay: document.getElementById("rippleOverlay"),
           grahaTableBody: document.getElementById("grahaTableBody"),
-          activeGrahaHighlightBadge: document.getElementById("activeGrahaHighlightBadge")
+          activeGrahaHighlightBadge: document.getElementById("activeGrahaHighlightBadge"),
+          activeEventSpotlightBox: document.getElementById("activeEventSpotlightBox"),
+          spotlightIndexTag: document.getElementById("spotlightIndexTag")
         };
       }
 
@@ -1004,17 +1059,11 @@
 
         if (this.dom.btnNext) this.dom.btnNext.addEventListener("click", () => this.navigateEvent(1));
         if (this.dom.btnPrev) this.dom.btnPrev.addEventListener("click", () => this.navigateEvent(-1));
-        if (this.dom.btnReset) this.dom.btnReset.addEventListener("click", () => this.resetTimeline());
-        if (this.dom.btnPlay) this.dom.btnPlay.addEventListener("click", () => this.togglePlay());
 
         window.addEventListener("keydown", (e) => {
           if (e.target.tagName === "INPUT" || e.target.tagName === "SELECT") return;
           if (e.key === "ArrowRight") this.navigateEvent(1);
           else if (e.key === "ArrowLeft") this.navigateEvent(-1);
-          else if (e.key === " ") {
-            e.preventDefault();
-            this.togglePlay();
-          }
         });
       }
 
@@ -1270,8 +1319,8 @@
 
         if (this.dom.activeGrahaHighlightBadge) {
           this.dom.activeGrahaHighlightBadge.textContent = activePlanetName 
-            ? `Active Event: ${activePlanetName}` 
-            : "Baseline Positions";
+            ? `Active Focus: ${activePlanetName} (Event #${this.activeEventIndex + 1})` 
+            : "Baseline Positions (Jan 1, 2027)";
         }
 
         const grahaOrder = ["Sun", "Mars", "Mercury", "Jupiter", "Venus", "Saturn", "Rahu", "Ketu"];
@@ -1368,7 +1417,7 @@
                 <span class="event-badge ${badgeClass}">${event.changeType}</span>
                 ${dignityTag}
               </span>
-              <span class="event-date">${event.date}</span>
+              <span class="event-date">#${idx + 1} • ${event.date}</span>
             </div>
             <div class="event-headline">${event.title}</div>
             <div class="event-subtext">${event.details}</div>
@@ -1387,8 +1436,6 @@
         const nextIdx = this.activeEventIndex + step;
         if (nextIdx >= -1 && nextIdx < PLANETARY_EVENTS_2027.length) {
           this.jumpToEvent(nextIdx);
-        } else if (this.isPlaying) {
-          this.togglePlay();
         }
       }
 
@@ -1412,28 +1459,64 @@
         this.renderKundliChart(true);
         this.renderPlanetaryTable();
         this.highlightActiveEventCard();
+        this.renderSpotlightEventCard();
       }
 
-      resetTimeline() {
-        this.jumpToEvent(-1);
-      }
+      renderSpotlightEventCard() {
+        if (!this.dom.activeEventSpotlightBox) return;
 
-      togglePlay() {
-        this.isPlaying = !this.isPlaying;
-        if (this.isPlaying) {
-          if (this.dom.btnPlay) {
-            this.dom.btnPlay.textContent = "❚❚ Pause";
-            this.dom.btnPlay.classList.add("btn-primary");
-          }
-          this.playTimer = setInterval(() => this.navigateEvent(1), 1800);
-        } else {
-          if (this.dom.btnPlay) {
-            this.dom.btnPlay.textContent = "▶ Play";
-            this.dom.btnPlay.classList.remove("btn-primary");
-          }
-          clearInterval(this.playTimer);
-          this.playTimer = null;
+        if (this.activeEventIndex === -1) {
+          if (this.dom.spotlightIndexTag) this.dom.spotlightIndexTag.textContent = "Baseline Ephemeris";
+          this.dom.activeEventSpotlightBox.innerHTML = `
+            <div class="event-item event-item-standalone">
+              <div class="event-meta-line">
+                <span class="planet-chip">
+                  <span style="color: #fbbf24">●</span> All Navagrahas
+                  <span class="event-badge badge-transit">BASELINE</span>
+                </span>
+                <span class="event-date">2027-01-01 00:00 IST</span>
+              </div>
+              <div class="event-headline">Baseline Nirayana Lahiri Planetary State</div>
+              <div class="event-subtext">Initial starting coordinates at the opening of 2027. Click <strong>Next ▶</strong> to advance through chronologically scheduled transits, retrogrades, combustions & eclipses.</div>
+            </div>
+          `;
+          return;
         }
+
+        const ev = PLANETARY_EVENTS_2027[this.activeEventIndex];
+        if (this.dom.spotlightIndexTag) {
+          this.dom.spotlightIndexTag.textContent = `Event #${this.activeEventIndex + 1} of ${PLANETARY_EVENTS_2027.length}`;
+        }
+
+        const badgeClass = {
+          TRANSIT: "badge-transit",
+          RETROGRADE: "badge-retro",
+          DIRECT: "badge-direct",
+          COMBUSTION_ON: "badge-combust",
+          COMBUSTION_OFF: "badge-combust",
+          GRAHAN: "badge-grahan",
+          GRAHAN_END: "badge-grahan-end"
+        }[ev.changeType] || "badge-transit";
+
+        let dignityTag = "";
+        if (ev.title.includes("Uchha")) dignityTag = `<span class="dignity-pill-uchha">⬆ Uchcha</span>`;
+        else if (ev.title.includes("Neecha")) dignityTag = `<span class="dignity-pill-neecha">⬇ Neecha</span>`;
+
+        this.dom.activeEventSpotlightBox.innerHTML = `
+          <div class="event-item event-item-standalone active-event">
+            <div class="event-meta-line">
+              <span class="planet-chip">
+                <span style="color: ${GRAHA_CONFIG[ev.planet]?.stroke || '#fff'}">●</span>
+                ${ev.planet}
+                <span class="event-badge ${badgeClass}">${ev.changeType}</span>
+                ${dignityTag}
+              </span>
+              <span class="event-date">#${this.activeEventIndex + 1} • ${ev.date}</span>
+            </div>
+            <div class="event-headline">${ev.title}</div>
+            <div class="event-subtext">${ev.details}</div>
+          </div>
+        `;
       }
 
       updateActiveEventDisplay() {
@@ -1469,6 +1552,7 @@
       try {
         if (!window.astrologyApp) {
           window.astrologyApp = new JyotishEngine();
+          window.astrologyApp.renderSpotlightEventCard();
         }
       } catch (err) {
         console.error("Simulator initialization error:", err);
