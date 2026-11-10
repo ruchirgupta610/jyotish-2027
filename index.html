@@ -995,35 +995,7 @@
       <!-- Left Column: Chart, Controls, & Prediction Card -->
       <section class="chart-section">
         <div class="chart-card">
-          <div class="chart-header">
-            <span class="chart-tag">● NORTH INDIAN KUNDLI (BHAVA-FIXED)</span>
-            <div class="legend-pills">
-              <span class="legend-pill"><span class="motion-dot retro-dot"></span> Vakri ↺</span>
-              <span class="legend-pill"><span class="motion-dot direct-dot"></span> Margi ↻</span>
-              <span class="legend-pill">⋆ Combust</span>
-              <span class="legend-pill"><span style="color:#10b981;font-weight:900;">⬆</span> Uchcha</span>
-              <span class="legend-pill"><span style="color:#ef4444;font-weight:900;">⬇</span> Neecha</span>
-              <span class="legend-pill">🌑 Surya Grahan</span>
-            </div>
-          </div>
-
-          <!-- SVG Canvas Stage -->
-          <div class="svg-stage-wrapper">
-            <div id="rippleOverlay" class="ripple-overlay-layer"></div>
-            <svg id="kundliSvg" viewBox="0 0 1000 1000" class="kundli-svg">
-              <g class="kundli-framework">
-                <rect x="10" y="10" width="980" height="980" fill="none" stroke="var(--gold-line)" stroke-width="3"/>
-                <line x1="10" y1="10" x2="990" y2="990" stroke="var(--gold-line)" stroke-width="2.2"/>
-                <line x1="990" y1="10" x2="10" y2="990" stroke="var(--gold-line)" stroke-width="2.2"/>
-                <polygon points="500,10 990,500 500,990 10,500" fill="none" stroke="var(--gold-line)" stroke-width="2.5"/>
-              </g>
-
-              <g id="houseRashiNumbers" class="rashi-labels"></g>
-              <g id="grahaLayer" class="grahas-layer"></g>
-            </svg>
-          </div>
-
-          <!-- Controls Panel Placed Directly Beneath Chart -->
+          <!-- Controls Panel Placed at the Top -->
           <div class="chart-controls-panel">
             <div class="rashi-control-group">
               <label for="lagnaSelect">Lagna / Moon Ref:</label>
@@ -1051,13 +1023,42 @@
             </div>
           </div>
 
-          <!-- Prediction Card -->
+          <!-- Prediction Card Directly Beneath Controls -->
           <div class="prediction-card">
             <div class="prediction-header">
               <span class="rashi-indicator" id="predictionRashiName">Mesha (Aries) Prediction</span>
               <span class="prediction-tag">Transit Impact</span>
             </div>
             <p id="predictionText" class="prediction-text">Select an event or press Next to inspect predictive transit effects for this sign.</p>
+          </div>
+
+          <!-- Chart Header & Legend -->
+          <div class="chart-header">
+            <span class="chart-tag">● NORTH INDIAN KUNDLI (BHAVA-FIXED)</span>
+            <div class="legend-pills">
+              <span class="legend-pill"><span class="motion-dot retro-dot"></span> Vakri ↺</span>
+              <span class="legend-pill"><span class="motion-dot direct-dot"></span> Margi ↻</span>
+              <span class="legend-pill">⋆ Combust</span>
+              <span class="legend-pill"><span style="color:#10b981;font-weight:900;">⬆</span> Uchcha</span>
+              <span class="legend-pill"><span style="color:#ef4444;font-weight:900;">⬇</span> Neecha</span>
+              <span class="legend-pill">🌑 Surya Grahan</span>
+            </div>
+          </div>
+
+          <!-- SVG Canvas Stage -->
+          <div class="svg-stage-wrapper">
+            <div id="rippleOverlay" class="ripple-overlay-layer"></div>
+            <svg id="kundliSvg" viewBox="0 0 1000 1000" class="kundli-svg">
+              <g class="kundli-framework">
+                <rect x="10" y="10" width="980" height="980" fill="none" stroke="var(--gold-line)" stroke-width="3"/>
+                <line x1="10" y1="10" x2="990" y2="990" stroke="var(--gold-line)" stroke-width="2.2"/>
+                <line x1="990" y1="10" x2="10" y2="990" stroke="var(--gold-line)" stroke-width="2.2"/>
+                <polygon points="500,10 990,500 500,990 10,500" fill="none" stroke="var(--gold-line)" stroke-width="2.5"/>
+              </g>
+
+              <g id="houseRashiNumbers" class="rashi-labels"></g>
+              <g id="grahaLayer" class="grahas-layer"></g>
+            </svg>
           </div>
         </div>
       </section>
