@@ -1180,17 +1180,30 @@
 
         this.dom.rippleOverlay.innerHTML = "";
 
-        const delays = [0, 140, 280];
-        delays.forEach((delay) => {
-          const wave = document.createElement("div");
-          wave.className = "orkut-wave";
-          wave.style.left = `${posX}%`;
-          wave.style.top = `${posY}%`;
-          wave.style.border = `4px solid ${rippleColor}`;
-          wave.style.boxShadow = `0 0 16px ${rippleColor}`;
-          wave.style.animationDelay = `${delay}ms`;
-          this.dom.rippleOverlay.appendChild(wave);
+        // Single soft pulse
+        const wave = document.createElement("div");
+        wave.style.position = "absolute";
+        wave.style.borderRadius = "50%";
+        wave.style.left = `${posX}%`;
+        wave.style.top = `${posY}%`;
+        wave.style.transform = "translate(-50%, -50%)";
+        wave.style.pointerEvents = "none";
+        wave.style.border = `1.5px solid ${rippleColor}`;
+        wave.style.boxShadow = `0 0 6px ${rippleColor}`;
+
+        this.dom.rippleOverlay.appendChild(wave);
+
+        const animation = wave.animate([
+          { width: "24px", height: "24px", opacity: 0.50 },
+          { width: "140px", height: "140px", opacity: 0.20, offset: 0.6 },
+          { width: "200px", height: "200px", opacity: 0 }
+        ], {
+          duration: 1300,
+          easing: "cubic-bezier(0.16, 1, 0.3, 1)",
+          fill: "forwards"
         });
+
+        animation.onfinish = () => wave.remove();
       }
 
       calculateClusterOffset(index, total, house) {
