@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=1100, initial-scale=1.0" />
   <title>2027 Vedic Planetary Transits & Kundli Simulator</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -39,65 +39,96 @@
       font-family: var(--font-body);
       line-height: 1.5;
       min-height: 100vh;
-      padding: 14px 20px;
+      min-width: 1024px;
+      padding: 16px 24px;
+      overflow-x: auto;
+    }
+
+    /* Small Screen Blocker: triggers only on mobile/narrow viewports (< 900px) */
+    #screen-blocker {
+      display: none;
+    }
+
+    @media screen and (max-width: 900px) {
+      #screen-blocker {
+        position: fixed;
+        inset: 0;
+        z-index: 99999;
+        background: #040711;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+      }
+
+      .blocker-card {
+        background: #0c1220;
+        border: 1px solid var(--gold-line);
+        border-radius: 14px;
+        padding: 32px 24px;
+        max-width: 440px;
+        text-align: center;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.7), 0 0 20px rgba(212, 175, 55, 0.15);
+      }
+
+      .blocker-icon {
+        font-size: 2.4rem;
+        margin-bottom: 12px;
+      }
+
+      .blocker-title {
+        font-family: var(--font-heading);
+        font-size: 1.25rem;
+        color: #fbbf24;
+        margin-bottom: 10px;
+        letter-spacing: 0.5px;
+      }
+
+      .blocker-desc {
+        font-size: 0.9rem;
+        color: var(--text-muted);
+        line-height: 1.6;
+      }
+
+      .app-container {
+        display: none !important;
+      }
     }
 
     .app-container {
       max-width: 1640px;
+      min-width: 1020px;
       margin: 0 auto;
       display: flex;
       flex-direction: column;
       gap: 16px;
     }
 
-    /* 1. Top Navigation Header */
+    /* 1. Header Bar: Clean Title & Date Badge (No Om icon) */
     .top-nav {
       display: flex;
       justify-content: space-between;
       align-items: center;
       background: var(--bg-card);
-      padding: 12px 22px;
+      padding: 14px 24px;
       border-radius: 12px;
       border: 1px solid var(--border-card);
-      flex-wrap: wrap;
-      gap: 10px;
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-    }
-
-    .brand-om {
-      width: 42px;
-      height: 42px;
-      border-radius: 10px;
-      background: linear-gradient(135deg, #f59e0b, #d97706);
-      color: #111;
-      font-size: 24px;
-      font-weight: 700;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
     }
 
     .brand h1 {
       font-family: var(--font-heading);
-      font-size: 1.25rem;
+      font-size: 1.3rem;
       letter-spacing: 1px;
       color: #fbbf24;
       display: flex;
       align-items: center;
       gap: 8px;
-      flex-wrap: wrap;
     }
 
     .badge-accent {
       font-family: var(--font-mono);
       font-size: 0.65rem;
-      padding: 2px 7px;
+      padding: 2px 8px;
       background: rgba(245, 158, 11, 0.15);
       border: 1px solid #f59e0b;
       border-radius: 4px;
@@ -106,39 +137,27 @@
 
     .subtitle {
       color: var(--text-muted);
-      font-size: 0.78rem;
+      font-size: 0.8rem;
+      margin-top: 2px;
     }
 
     .active-date-badge {
       font-family: var(--font-mono);
-      font-size: 0.9rem;
+      font-size: 0.92rem;
       font-weight: 700;
       color: #fbbf24;
       background: var(--bg-surface);
-      padding: 6px 14px;
+      padding: 7px 16px;
       border-radius: 6px;
       border: 1px solid var(--border-light);
-      display: inline-block;
     }
 
-    /* 2. Workspace Grid: 40% Chart - 60% Status Table on Desktop, Stacks <= 1024px */
+    /* 2. Main Workspace: Strict 40% - 60% Split (No media collapse) */
     .workspace-grid {
       display: grid;
       grid-template-columns: 40% calc(60% - 16px);
       gap: 16px;
       align-items: stretch;
-    }
-
-    @media (max-width: 1120px) {
-      .workspace-grid {
-        grid-template-columns: 42% calc(58% - 16px);
-      }
-    }
-
-    @media (max-width: 1024px) {
-      .workspace-grid {
-        grid-template-columns: 1fr;
-      }
     }
 
     /* Left Column (40%): Chart Card */
@@ -154,10 +173,10 @@
 
     .chart-header {
       display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 8px;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 6px;
+      width: 100%;
     }
 
     .chart-tag {
@@ -165,14 +184,17 @@
       font-weight: 700;
       letter-spacing: 0.5px;
       color: #f59e0b;
+      white-space: nowrap;
+      display: block;
     }
 
     .legend-pills {
       display: flex;
-      gap: 10px;
+      flex-wrap: wrap;
+      gap: 8px 12px;
       font-size: 0.72rem;
       color: var(--text-muted);
-      flex-wrap: wrap;
+      width: 100%;
     }
 
     .legend-pill {
@@ -194,7 +216,7 @@
     .svg-stage-wrapper {
       width: 100%;
       aspect-ratio: 1 / 1;
-      max-width: 540px;
+      max-width: 530px;
       margin: 0 auto;
       background: radial-gradient(circle at center, #111a2d, #060911);
       border-radius: 8px;
@@ -204,7 +226,6 @@
       overflow: hidden;
     }
 
-    /* Concentric Ripple Overlay */
     .ripple-overlay-layer {
       position: absolute;
       top: 0;
@@ -231,9 +252,7 @@
         opacity: 0.95;
         border-width: 5px;
       }
-      50% {
-        opacity: 0.7;
-      }
+      50% { opacity: 0.7; }
       100% {
         width: 440px;
         height: 440px;
@@ -248,7 +267,7 @@
       overflow: visible;
     }
 
-    /* Chart Controls Directly Below SVG Canvas (Prev/Next Only) */
+    /* Controls Panel: Only Lagna selector and Prev/Next buttons */
     .chart-controls-panel {
       background: var(--bg-surface);
       border: 1px solid var(--border-card);
@@ -257,8 +276,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      flex-wrap: wrap;
-      gap: 10px;
+      gap: 12px;
     }
 
     .rashi-control-group {
@@ -274,7 +292,7 @@
       color: #fbbf24;
       border: 1px solid var(--gold-line);
       border-radius: 6px;
-      padding: 6px 10px;
+      padding: 6px 12px;
       font-size: 0.84rem;
       font-weight: 600;
       outline: none;
@@ -317,7 +335,7 @@
       transform: translateY(1px);
     }
 
-    /* Right Column (60%): Live Status Table + Current Highlight Card Below */
+    /* Right Column (60%): Live Status Table + Current Highlight Box */
     .right-column-container {
       display: flex;
       flex-direction: column;
@@ -339,8 +357,6 @@
       justify-content: space-between;
       align-items: center;
       margin-bottom: 12px;
-      flex-wrap: wrap;
-      gap: 8px;
     }
 
     .table-title {
@@ -370,7 +386,7 @@
       border-collapse: collapse;
       text-align: left;
       font-size: 0.84rem;
-      min-width: 620px;
+      min-width: 600px;
     }
 
     .graha-table th {
@@ -386,7 +402,7 @@
     }
 
     .graha-table td {
-      padding: 9px 12px;
+      padding: 8.5px 12px;
       border-bottom: 1px solid #141f33;
       color: var(--text-primary);
       white-space: nowrap;
@@ -428,7 +444,7 @@
     .badge-direct-tbl { background: rgba(59, 130, 246, 0.2); color: #60a5fa; border: 1px solid #2563eb; }
     .badge-grahan-tbl { background: rgba(220, 38, 38, 0.25); color: #f87171; border: 1px solid #b91c1c; }
 
-    /* Current Event Spotlight Card Directly Below the Table */
+    /* Current Active Event Box Below Table */
     .current-event-spotlight {
       background: var(--bg-card);
       border-radius: 12px;
@@ -450,11 +466,7 @@
       text-transform: uppercase;
     }
 
-    .spotlight-card-content {
-      /* Will contain the active .event-item clone */
-    }
-
-    /* 3. Bottom Section: List of Events (Replaced table position) */
+    /* 3. Bottom Events Feed Section */
     .bottom-events-section {
       width: 100%;
     }
@@ -466,7 +478,7 @@
       display: flex;
       flex-direction: column;
       overflow: hidden;
-      max-height: 460px;
+      max-height: 440px;
     }
 
     .event-feed-header {
@@ -522,8 +534,6 @@
       justify-content: space-between;
       align-items: center;
       margin-bottom: 5px;
-      flex-wrap: wrap;
-      gap: 4px;
     }
 
     .planet-chip {
@@ -611,7 +621,6 @@
       fill: none;
     }
 
-    /* Combustion */
     .graha-combust .graha-circle,
     .graha-combust .graha-text {
       opacity: 0.22 !important;
@@ -629,7 +638,6 @@
       to { transform: scale(1.15); opacity: 1; }
     }
 
-    /* Surya Grahan Eclipse Overlay */
     .eclipse-disc-overlay {
       opacity: 0;
       transform: scale(0);
@@ -654,7 +662,6 @@
       opacity: 0.85 !important;
     }
 
-    /* Dignity Badges */
     .dignity-badge-uchha circle {
       fill: #059669;
       stroke: #ffffff;
@@ -720,26 +727,34 @@
   </style>
 </head>
 <body>
+  <!-- Small Screen / Mobile Blocker Message -->
+  <div id="screen-blocker">
+    <div class="blocker-card">
+      <div class="blocker-icon">💻</div>
+      <h2 class="blocker-title">Desktop / Tablet Required</h2>
+      <p class="blocker-desc">
+        This application is designed and optimized for Desktop and Tablet screens only.<br><br>
+        Please open this simulator on a laptop, desktop, or tablet device for the full interactive Kundli and transit experience.
+      </p>
+    </div>
+  </div>
+
   <div class="app-container">
-    <!-- 1. Top Navigation Bar -->
+    <!-- 1. Header Bar (Clean, no Om symbol) -->
     <header class="top-nav">
       <div class="brand">
-        <div class="brand-om">ॐ</div>
-        <div>
-          <h1>JYOTISH 2027 <span class="badge-accent">TRANSIT ENGINE</span></h1>
-          <p class="subtitle">Nirayana Lahiri • Mean Nodes • North Indian Kundli</p>
-        </div>
+        <h1>JYOTISH 2027 <span class="badge-accent">TRANSIT ENGINE</span></h1>
+        <p class="subtitle">Nirayana Lahiri • Mean Nodes • North Indian Kundli</p>
       </div>
       <div class="top-nav-status">
         <span class="active-date-badge" id="displayDateTop">2027-01-01</span>
       </div>
     </header>
 
-    <!-- 2. Main Workspace: 40% Chart - 60% Status Table on Desktop -->
+    <!-- 2. Main Workspace: 40% Chart - 60% Status Table -->
     <main class="workspace-grid">
       <!-- Left Column (40%): Chart Card -->
       <section class="chart-card">
-        <!-- Chart Header with Legend -->
         <div class="chart-header">
           <span class="chart-tag">● NORTH INDIAN KUNDLI (BHAVA-FIXED)</span>
           <div class="legend-pills">
@@ -748,11 +763,10 @@
             <span class="legend-pill">⋆ Combust</span>
             <span class="legend-pill"><span style="color:#10b981;font-weight:900;">⬆</span> Uchcha</span>
             <span class="legend-pill"><span style="color:#ef4444;font-weight:900;">⬇</span> Neecha</span>
-            <span class="legend-pill">🌑 Surya Grahan</span>
+            <span class="legend-pill">🌑 Grahan</span>
           </div>
         </div>
 
-        <!-- SVG Stage Wrapper -->
         <div class="svg-stage-wrapper">
           <div id="rippleOverlay" class="ripple-overlay-layer"></div>
           <svg id="kundliSvg" viewBox="0 0 1000 1000" class="kundli-svg">
@@ -768,7 +782,7 @@
           </svg>
         </div>
 
-        <!-- Chart Controls Directly Below SVG Stage (Prev / Next only) -->
+        <!-- Chart Controls (Only Lagna and Prev/Next) -->
         <div class="chart-controls-panel">
           <div class="rashi-control-group">
             <label for="lagnaSelect">Lagna / Moon Ref:</label>
@@ -823,20 +837,20 @@
           </div>
         </div>
 
-        <!-- Dedicated Container Below Table showing the Current Event's event-item div -->
+        <!-- Spotlight: Active Event Display Below Table -->
         <div class="current-event-spotlight">
           <div class="spotlight-header">
-            <span>Highlighted Event (Active In Chart & Table)</span>
+            <span>Current Active Event</span>
             <span id="spotlightIndexTag" style="font-family:var(--font-mono);">Baseline</span>
           </div>
-          <div id="activeEventSpotlightBox" class="spotlight-card-content">
-            <!-- Active event item dynamically cloned here -->
+          <div id="currentEventBox" class="spotlight-card-content">
+            <!-- Populated via script -->
           </div>
         </div>
       </section>
     </main>
 
-    <!-- 3. Bottom Section: List of Events (Replaced former Table section) -->
+    <!-- 3. Bottom Chronological Events Feed -->
     <section class="bottom-events-section">
       <div class="events-feed-wrapper">
         <div class="event-feed-header">
@@ -849,7 +863,7 @@
 
     <!-- Footer -->
     <footer class="app-footer">
-      <p>© 2026 Ruchir Gupta. Released under the MIT License.</p>
+      <p>© 2026. Released under the MIT License.</p>
       <p class="footer-sub">Nirayana Lahiri Ephemeris & Gochara Engine. Built for Vedic astrology exploration.</p>
     </footer>
   </div>
@@ -1026,6 +1040,7 @@
         this.bindEvents();
         this.updateActiveEventDisplay();
         this.renderKundliChart(false);
+        this.renderSpotlightEventCard();
       }
 
       initDOMElements() {
@@ -1042,7 +1057,7 @@
           rippleOverlay: document.getElementById("rippleOverlay"),
           grahaTableBody: document.getElementById("grahaTableBody"),
           activeGrahaHighlightBadge: document.getElementById("activeGrahaHighlightBadge"),
-          activeEventSpotlightBox: document.getElementById("activeEventSpotlightBox"),
+          currentEventBox: document.getElementById("currentEventBox"),
           spotlightIndexTag: document.getElementById("spotlightIndexTag")
         };
       }
@@ -1126,7 +1141,6 @@
               eventChangeType
             );
 
-            // Trigger concentric ripples on state-change events
             if (isEventSubject && eventChangeType && eventChangeType !== "TRANSIT") {
               this.triggerOrkutRipple(targetX, targetY, eventChangeType);
             }
@@ -1463,11 +1477,11 @@
       }
 
       renderSpotlightEventCard() {
-        if (!this.dom.activeEventSpotlightBox) return;
+        if (!this.dom.currentEventBox) return;
 
         if (this.activeEventIndex === -1) {
           if (this.dom.spotlightIndexTag) this.dom.spotlightIndexTag.textContent = "Baseline Ephemeris";
-          this.dom.activeEventSpotlightBox.innerHTML = `
+          this.dom.currentEventBox.innerHTML = `
             <div class="event-item event-item-standalone">
               <div class="event-meta-line">
                 <span class="planet-chip">
@@ -1477,7 +1491,7 @@
                 <span class="event-date">2027-01-01 00:00 IST</span>
               </div>
               <div class="event-headline">Baseline Nirayana Lahiri Planetary State</div>
-              <div class="event-subtext">Initial starting coordinates at the opening of 2027. Click <strong>Next ▶</strong> to advance through chronologically scheduled transits, retrogrades, combustions & eclipses.</div>
+              <div class="event-subtext">Initial starting coordinates at the opening of 2027. Click <strong>Next ▶</strong> or press Right Arrow to advance through events.</div>
             </div>
           `;
           return;
@@ -1502,7 +1516,7 @@
         if (ev.title.includes("Uchha")) dignityTag = `<span class="dignity-pill-uchha">⬆ Uchcha</span>`;
         else if (ev.title.includes("Neecha")) dignityTag = `<span class="dignity-pill-neecha">⬇ Neecha</span>`;
 
-        this.dom.activeEventSpotlightBox.innerHTML = `
+        this.dom.currentEventBox.innerHTML = `
           <div class="event-item event-item-standalone active-event">
             <div class="event-meta-line">
               <span class="planet-chip">
@@ -1547,12 +1561,10 @@
       }
     }
 
-    // Fail-safe execution guard
     function startSimulator() {
       try {
         if (!window.astrologyApp) {
           window.astrologyApp = new JyotishEngine();
-          window.astrologyApp.renderSpotlightEventCard();
         }
       } catch (err) {
         console.error("Simulator initialization error:", err);
