@@ -47,10 +47,10 @@
       margin: 0 auto;
       display: flex;
       flex-direction: column;
-      gap: 14px;
+      gap: 16px;
     }
 
-    /* Top Navigation Header */
+    /* 1. Top Navigation Header */
     .top-nav {
       display: flex;
       justify-content: space-between;
@@ -116,27 +116,21 @@
       border: 1px solid var(--border-light);
     }
 
-    /* Workspace Grid: 2 Columns Top (Left ~45% Chart & Prediction, Right ~55% Events Feed & Filters) */
+    /* 2. Workspace Grid: 2 Columns on Desktop, Stacks <= 1024px */
     .workspace-grid {
       display: grid;
-      grid-template-columns: 4.5fr 5.5fr;
-      gap: 18px;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
       align-items: stretch;
     }
 
-    @media (max-width: 1100px) {
+    @media (max-width: 1024px) {
       .workspace-grid {
         grid-template-columns: 1fr;
       }
     }
 
-    /* Left Section: Chart Card */
-    .chart-section {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
+    /* Left Column: Chart Card */
     .chart-card {
       background: var(--bg-card);
       border-radius: 12px;
@@ -145,17 +139,6 @@
       display: flex;
       flex-direction: column;
       gap: 12px;
-    }
-
-    .chart-card {
-      background: var(--bg-card);
-      border-radius: 12px;
-      border: 1px solid var(--border-card);
-      padding: 16px;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      height: 100%;
     }
 
     .chart-header {
@@ -254,7 +237,7 @@
       overflow: visible;
     }
 
-    /* Chart Controls Directly Below */
+    /* Chart Controls Directly Below SVG Canvas */
     .chart-controls-panel {
       background: var(--bg-surface);
       border: 1px solid var(--border-card);
@@ -329,45 +312,38 @@
       padding: 7px 12px;
     }
 
-    /* Top Right Section: Events Feed */
-    .events-section-col {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      height: 100%;
-    }
-
-    .event-feed-wrapper-full {
+    /* Right Column: Events Feed */
+    .events-feed-wrapper {
       background: var(--bg-card);
       border-radius: 12px;
       border: 1px solid var(--border-card);
       display: flex;
       flex-direction: column;
       overflow: hidden;
-      flex: 1;
-      min-height: 480px;
-      max-height: 600px;
+      height: 100%;
+      min-height: 540px;
     }
 
     .event-feed-header {
-      padding: 12px 16px;
+      padding: 14px 18px;
       background: #111a2d;
       border-bottom: 1px solid var(--border-card);
       display: flex;
       justify-content: space-between;
       align-items: center;
-      font-size: 0.75rem;
+      font-size: 0.78rem;
       font-weight: 700;
       letter-spacing: 0.5px;
       color: var(--text-muted);
     }
 
-    .events-grid-list {
+    .events-single-list {
       overflow-y: auto;
       padding: 12px;
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      display: flex;
+      flex-direction: column;
       gap: 10px;
+      flex: 1;
     }
 
     .event-item {
@@ -403,12 +379,12 @@
       align-items: center;
       gap: 5px;
       font-weight: 700;
-      font-size: 0.8rem;
+      font-size: 0.82rem;
     }
 
     .event-badge {
       font-size: 0.68rem;
-      padding: 2px 6px;
+      padding: 2px 7px;
       border-radius: 4px;
       font-family: var(--font-mono);
       font-weight: 600;
@@ -428,7 +404,7 @@
     }
 
     .event-headline {
-      font-size: 0.86rem;
+      font-size: 0.88rem;
       font-weight: 600;
       color: var(--text-primary);
       margin-bottom: 3px;
@@ -437,15 +413,12 @@
     .event-subtext {
       font-size: 0.78rem;
       color: var(--text-muted);
-      line-height: 1.35;
+      line-height: 1.4;
     }
 
-    /* Bottom Section: Full Width Live Planetary Status Table */
+    /* 3. Bottom Section: Full-Width Status Table */
     .table-section {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      margin-top: 4px;
+      width: 100%;
     }
 
     .status-table-card {
@@ -473,6 +446,12 @@
       gap: 8px;
     }
 
+    .active-index {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
     .table-container {
       overflow-x: auto;
       border-radius: 8px;
@@ -485,13 +464,13 @@
       border-collapse: collapse;
       text-align: left;
       font-size: 0.84rem;
-      table-layout: fixed;
+      min-width: 780px;
     }
 
     .graha-table th {
       background: #111a2d;
       color: var(--text-muted);
-      padding: 10px 14px;
+      padding: 11px 14px;
       font-weight: 700;
       border-bottom: 1px solid var(--border-card);
       text-transform: uppercase;
@@ -501,17 +480,15 @@
     }
 
     .graha-table td {
-      padding: 9px 14px;
+      padding: 10px 14px;
       border-bottom: 1px solid #141f33;
       color: var(--text-primary);
       white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
       vertical-align: middle;
     }
 
     .graha-row {
-      transition: background 0.25s ease, box-shadow 0.25s ease;
+      transition: background 0.25s ease;
     }
 
     .graha-row:hover {
@@ -519,7 +496,7 @@
     }
 
     .graha-row-highlight {
-      background: rgba(245, 158, 11, 0.22) !important;
+      background: rgba(245, 158, 11, 0.18) !important;
       box-shadow: inset 4px 0 0 #f59e0b;
       font-weight: 600;
     }
@@ -588,7 +565,7 @@
       fill: none;
     }
 
-    /* Combustion: Blur & opacity reduction */
+    /* Combustion */
     .graha-combust .graha-circle,
     .graha-combust .graha-text {
       opacity: 0.22 !important;
@@ -680,185 +657,6 @@
       margin-left: 4px;
     }
 
-    /* Column 3: Events Timeline & Filters */
-    .events-section-col {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      height: 100%;
-    }
-
-    .bottom-filter-box {
-      background: var(--bg-card);
-      padding: 14px 16px;
-      border-radius: 12px;
-      border: 1px solid var(--border-card);
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .filter-row-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 6px;
-    }
-
-    .filter-sub-group {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      flex-wrap: wrap;
-    }
-
-    .filter-heading {
-      font-size: 0.7rem;
-      font-weight: 700;
-      color: var(--text-muted);
-      letter-spacing: 0.5px;
-    }
-
-    .filter-tip {
-      font-size: 0.7rem;
-      font-family: var(--font-mono);
-      color: #38bdf8;
-    }
-
-    .planet-filters, .type-filters {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 5px;
-    }
-
-    .chip-filter, .type-btn {
-      background: var(--bg-surface);
-      border: 1px solid var(--border-light);
-      color: var(--text-muted);
-      padding: 4px 9px;
-      border-radius: 6px;
-      font-size: 0.74rem;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      user-select: none;
-    }
-
-    .chip-filter:hover, .type-btn:hover {
-      color: var(--text-primary);
-      border-color: var(--gold-line);
-    }
-
-    .chip-filter.active, .type-btn.active {
-      background: #d97706;
-      border-color: #f59e0b;
-      color: #111;
-      font-weight: 700;
-    }
-
-    .event-feed-wrapper-full {
-      background: var(--bg-card);
-      border-radius: 12px;
-      border: 1px solid var(--border-card);
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-      flex: 1;
-      min-height: 520px;
-      max-height: 720px;
-    }
-
-    .event-feed-header {
-      padding: 10px 14px;
-      background: #111a2d;
-      border-bottom: 1px solid var(--border-card);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 0.72rem;
-      font-weight: 700;
-      letter-spacing: 0.5px;
-      color: var(--text-muted);
-    }
-
-    .events-grid-list {
-      overflow-y: auto;
-      padding: 10px;
-      display: flex;
-      flex-direction: column;
-      gap: 9px;
-    }
-
-    .event-item {
-      background: var(--bg-surface);
-      border: 1px solid var(--border-card);
-      border-radius: 8px;
-      padding: 10px 12px;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      position: relative;
-    }
-
-    .event-item:hover {
-      border-color: var(--gold-line);
-      background: #1c273c;
-    }
-
-    .event-item.active-event {
-      border: 1.5px solid #f59e0b;
-      background: #23314c;
-      box-shadow: 0 0 12px rgba(245, 158, 11, 0.2);
-    }
-
-    .event-meta-line {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 5px;
-    }
-
-    .planet-chip {
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      font-weight: 700;
-      font-size: 0.8rem;
-    }
-
-    .event-badge {
-      font-size: 0.68rem;
-      padding: 2px 6px;
-      border-radius: 4px;
-      font-family: var(--font-mono);
-      font-weight: 600;
-    }
-
-    .badge-transit { background: rgba(56, 189, 248, 0.15); color: #38bdf8; border: 1px solid #0284c7; }
-    .badge-retro { background: rgba(239, 68, 68, 0.18); color: #f87171; border: 1px solid #dc2626; }
-    .badge-direct { background: rgba(59, 130, 246, 0.18); color: #60a5fa; border: 1px solid #2563eb; }
-    .badge-combust { background: rgba(245, 158, 11, 0.18); color: #fbbf24; border: 1px solid #d97706; }
-    .badge-grahan { background: rgba(168, 85, 247, 0.2); color: #c084fc; border: 1px solid #9333ea; }
-    .badge-grahan-end { background: rgba(16, 185, 129, 0.18); color: #34d399; border: 1px solid #059669; }
-
-    .event-date {
-      font-family: var(--font-mono);
-      font-size: 0.78rem;
-      color: var(--text-muted);
-    }
-
-    .event-headline {
-      font-size: 0.86rem;
-      font-weight: 600;
-      color: var(--text-primary);
-      margin-bottom: 3px;
-    }
-
-    .event-subtext {
-      font-size: 0.78rem;
-      color: var(--text-muted);
-      line-height: 1.35;
-    }
-
     .app-footer {
       text-align: center;
       padding: 16px 0;
@@ -877,6 +675,7 @@
 </head>
 <body>
   <div class="app-container">
+    <!-- 1. Top Navigation Bar -->
     <header class="top-nav">
       <div class="brand">
         <div class="brand-om">ॐ</div>
@@ -890,152 +689,108 @@
       </div>
     </header>
 
-    <!-- Mid Section: Two Columns (Left Chart + Prediction, Right Filter & Events List) -->
-    <main class="workspace-grid">
-      <!-- Left Column: Chart, Controls, & Prediction Card -->
-      <section class="chart-section">
-        <div class="chart-card">
-          <!-- Controls Panel Placed at the Top -->
-          <div class="chart-controls-panel">
-            <div class="rashi-control-group">
-              <label for="lagnaSelect">Lagna / Moon Ref:</label>
-              <select id="lagnaSelect" class="styled-select">
-                <option value="1" selected>1. Mesha (Aries)</option>
-                <option value="2">2. Vrishabha (Taurus)</option>
-                <option value="3">3. Mithuna (Gemini)</option>
-                <option value="4">4. Karka (Cancer)</option>
-                <option value="5">5. Simha (Leo)</option>
-                <option value="6">6. Kanya (Virgo)</option>
-                <option value="7">7. Tula (Libra)</option>
-                <option value="8">8. Vrishchika (Scorpio)</option>
-                <option value="9">9. Dhanu (Sagittarius)</option>
-                <option value="10">10. Makara (Capricorn)</option>
-                <option value="11">11. Kumbha (Aquarius)</option>
-                <option value="12">12. Meena (Pisces)</option>
-              </select>
-            </div>
-
-            <div class="playback-controls-group">
-              <button id="btnPrev" class="btn" title="Previous Event (Left Arrow)">◀ Prev</button>
-              <button id="btnPlay" class="btn btn-primary" title="Play/Pause (Spacebar)">▶ Play</button>
-              <button id="btnNext" class="btn" title="Next Event (Right Arrow)">Next ▶</button>
-              <button id="btnReset" class="btn btn-icon" title="Reset to Jan 1, 2027">↺ Reset</button>
-            </div>
-          </div>
-
-          <!-- Prediction Card Directly Beneath Controls -->
-          <div class="prediction-card">
-            <div class="prediction-header">
-              <span class="rashi-indicator" id="predictionRashiName">Mesha (Aries) Prediction</span>
-              <span class="prediction-tag">Transit Impact</span>
-            </div>
-            <p id="predictionText" class="prediction-text">Select an event or press Next to inspect predictive transit effects for this sign.</p>
-          </div>
-    <!-- Mid Section: Two Columns (Left Chart, Right Events List) -->
+    <!-- 2. Main Workspace: 2 Balanced Columns -->
     <main class="workspace-grid">
       <!-- Left Column: Chart Card -->
-      <section class="chart-section">
-        <div class="chart-card">
-          <!-- 1. Chart Header & Legend -->
-          <div class="chart-header">
-            <span class="chart-tag">● NORTH INDIAN KUNDLI (BHAVA-FIXED)</span>
-            <div class="legend-pills">
-              <span class="legend-pill"><span class="motion-dot retro-dot"></span> Vakri ↺</span>
-              <span class="legend-pill"><span class="motion-dot direct-dot"></span> Margi ↻</span>
-              <span class="legend-pill">⋆ Combust</span>
-              <span class="legend-pill"><span style="color:#10b981;font-weight:900;">⬆</span> Uchcha</span>
-              <span class="legend-pill"><span style="color:#ef4444;font-weight:900;">⬇</span> Neecha</span>
-              <span class="legend-pill">🌑 Surya Grahan</span>
-            </div>
+      <section class="chart-card">
+        <!-- a. Chart Header with Legend -->
+        <div class="chart-header">
+          <span class="chart-tag">● NORTH INDIAN KUNDLI (BHAVA-FIXED)</span>
+          <div class="legend-pills">
+            <span class="legend-pill"><span class="motion-dot retro-dot"></span> Vakri ↺</span>
+            <span class="legend-pill"><span class="motion-dot direct-dot"></span> Margi ↻</span>
+            <span class="legend-pill">⋆ Combust</span>
+            <span class="legend-pill"><span style="color:#10b981;font-weight:900;">⬆</span> Uchcha</span>
+            <span class="legend-pill"><span style="color:#ef4444;font-weight:900;">⬇</span> Neecha</span>
+            <span class="legend-pill">🌑 Surya Grahan</span>
+          </div>
+        </div>
+
+        <!-- b. SVG Stage Wrapper -->
+        <div class="svg-stage-wrapper">
+          <div id="rippleOverlay" class="ripple-overlay-layer"></div>
+          <svg id="kundliSvg" viewBox="0 0 1000 1000" class="kundli-svg">
+            <g class="kundli-framework">
+              <rect x="10" y="10" width="980" height="980" fill="none" stroke="var(--gold-line)" stroke-width="3"/>
+              <line x1="10" y1="10" x2="990" y2="990" stroke="var(--gold-line)" stroke-width="2.2"/>
+              <line x1="990" y1="10" x2="10" y2="990" stroke="var(--gold-line)" stroke-width="2.2"/>
+              <polygon points="500,10 990,500 500,990 10,500" fill="none" stroke="var(--gold-line)" stroke-width="2.5"/>
+            </g>
+
+            <g id="houseRashiNumbers" class="rashi-labels"></g>
+            <g id="grahaLayer" class="grahas-layer"></g>
+          </svg>
+        </div>
+
+        <!-- c. Chart Controls Panel (Directly Below SVG Stage) -->
+        <div class="chart-controls-panel">
+          <div class="rashi-control-group">
+            <label for="lagnaSelect">Lagna / Moon Ref:</label>
+            <select id="lagnaSelect" class="styled-select">
+              <option value="1" selected>1. Mesha (Aries)</option>
+              <option value="2">2. Vrishabha (Taurus)</option>
+              <option value="3">3. Mithuna (Gemini)</option>
+              <option value="4">4. Karka (Cancer)</option>
+              <option value="5">5. Simha (Leo)</option>
+              <option value="6">6. Kanya (Virgo)</option>
+              <option value="7">7. Tula (Libra)</option>
+              <option value="8">8. Vrishchika (Scorpio)</option>
+              <option value="9">9. Dhanu (Sagittarius)</option>
+              <option value="10">10. Makara (Capricorn)</option>
+              <option value="11">11. Kumbha (Aquarius)</option>
+              <option value="12">12. Meena (Pisces)</option>
+            </select>
           </div>
 
-          <!-- 2. SVG Canvas Stage -->
-          <div class="svg-stage-wrapper">
-            <div id="rippleOverlay" class="ripple-overlay-layer"></div>
-            <svg id="kundliSvg" viewBox="0 0 1000 1000" class="kundli-svg">
-              <g class="kundli-framework">
-                <rect x="10" y="10" width="980" height="980" fill="none" stroke="var(--gold-line)" stroke-width="3"/>
-                <line x1="10" y1="10" x2="990" y2="990" stroke="var(--gold-line)" stroke-width="2.2"/>
-                <line x1="990" y1="10" x2="10" y2="990" stroke="var(--gold-line)" stroke-width="2.2"/>
-                <polygon points="500,10 990,500 500,990 10,500" fill="none" stroke="var(--gold-line)" stroke-width="2.5"/>
-              </g>
-
-              <g id="houseRashiNumbers" class="rashi-labels"></g>
-              <g id="grahaLayer" class="grahas-layer"></g>
-            </svg>
-          </div>
-
-          <!-- 3. Chart Controls Panel (Directly Below SVG Stage) -->
-          <div class="chart-controls-panel">
-            <div class="rashi-control-group">
-              <label for="lagnaSelect">Lagna / Moon Ref:</label>
-              <select id="lagnaSelect" class="styled-select">
-                <option value="1" selected>1. Mesha (Aries)</option>
-                <option value="2">2. Vrishabha (Taurus)</option>
-                <option value="3">3. Mithuna (Gemini)</option>
-                <option value="4">4. Karka (Cancer)</option>
-                <option value="5">5. Simha (Leo)</option>
-                <option value="6">6. Kanya (Virgo)</option>
-                <option value="7">7. Tula (Libra)</option>
-                <option value="8">8. Vrishchika (Scorpio)</option>
-                <option value="9">9. Dhanu (Sagittarius)</option>
-                <option value="10">10. Makara (Capricorn)</option>
-                <option value="11">11. Kumbha (Aquarius)</option>
-                <option value="12">12. Meena (Pisces)</option>
-              </select>
-            </div>
-
-            <div class="playback-controls-group">
-              <button id="btnPrev" class="btn" title="Previous Event (Left Arrow)">◀ Prev</button>
-              <button id="btnPlay" class="btn btn-primary" title="Play/Pause (Spacebar)">▶ Play</button>
-              <button id="btnNext" class="btn" title="Next Event (Right Arrow)">Next ▶</button>
-              <button id="btnReset" class="btn btn-icon" title="Reset to Jan 1, 2027">↺ Reset</button>
-            </div>
+          <div class="playback-controls-group">
+            <button id="btnPrev" class="btn" title="Previous Event (Left Arrow)">◀ Prev</button>
+            <button id="btnPlay" class="btn btn-primary" title="Play/Pause (Spacebar)">▶ Play</button>
+            <button id="btnNext" class="btn" title="Next Event (Right Arrow)">Next ▶</button>
+            <button id="btnReset" class="btn btn-icon" title="Reset to Jan 1, 2027">↺ Reset</button>
           </div>
         </div>
       </section>
 
-      <!-- Right Column: Chronological Events Feed -->
-      <section class="events-section-col">
-        <div class="event-feed-wrapper-full">
-          <div class="event-feed-header">
-            <span>2027 FULL CHRONOLOGICAL TIMELINE (DRIK PANCHANG)</span>
-            <span id="eventCountBadge">91 events</span>
-          </div>
-          <div id="eventsList" class="events-grid-list"></div>
+      <!-- Right Column: Single Column Events Feed -->
+      <section class="events-feed-wrapper">
+        <div class="event-feed-header">
+          <span>2027 FULL CHRONOLOGICAL TIMELINE (DRIK PANCHANG)</span>
+          <span id="eventCountBadge">91 events</span>
         </div>
+        <div id="eventsList" class="events-single-list"></div>
       </section>
     </main>
 
-    <!-- Bottom Section: Full Width Synchronized Planetary Status Table -->
+    <!-- 3. Bottom Section: Full Width Planetary Status Table -->
     <section class="table-section">
       <div class="status-table-card">
         <div class="status-table-header">
           <h3 class="table-title">🪐 LIVE PLANETARY POSITIONS & CONDITIONS</h3>
-          <span class="active-index" id="activeGrahaHighlightBadge">Highlighting Event Subject</span>
+          <span class="active-index" id="activeGrahaHighlightBadge">Baseline Positions</span>
         </div>
 
         <div class="table-container">
           <table class="graha-table">
             <thead>
               <tr>
-                <th>Planet</th>
-                <th>Current Rashi</th>
-                <th>House</th>
-                <th>Motion</th>
-                <th>Dignity</th>
-                <th>Combustion</th>
-                <th>Eclipse</th>
+                <th style="width: 16%;">Planet</th>
+                <th style="width: 22%;">Current Rashi</th>
+                <th style="width: 10%;">House</th>
+                <th style="width: 13%;">Motion</th>
+                <th style="width: 15%;">Dignity</th>
+                <th style="width: 12%;">Combustion</th>
+                <th style="width: 12%;">Eclipse</th>
               </tr>
             </thead>
             <tbody id="grahaTableBody">
-              <!-- Dynamically rendered rows -->
+              <!-- Dynamically populated rows -->
             </tbody>
           </table>
         </div>
       </div>
     </section>
 
+    <!-- Footer -->
     <footer class="app-footer">
       <p>© 2026 Ruchir Gupta. Released under the MIT License.</p>
       <p class="footer-sub">Nirayana Lahiri Ephemeris & Gochara Engine. Built for fun & open-source exploration.</p>
@@ -1322,14 +1077,13 @@
               eventChangeType
             );
 
-            // Orkut concentric ripple trigger
+            // Trigger concentric ripples on state-change events
             if (isEventSubject && eventChangeType && eventChangeType !== "TRANSIT") {
               this.triggerOrkutRipple(targetX, targetY, eventChangeType);
             }
           });
         }
 
-        this.updateActiveYogasDisplay();
         this.renderPlanetaryTable();
       }
 
@@ -1516,7 +1270,7 @@
 
         if (this.dom.activeGrahaHighlightBadge) {
           this.dom.activeGrahaHighlightBadge.textContent = activePlanetName 
-            ? `Active: ${activePlanetName}` 
+            ? `Active Event: ${activePlanetName}` 
             : "Baseline Positions";
         }
 
@@ -1565,49 +1319,21 @@
 
           html += `
             <tr class="graha-row ${isHighlighted ? 'graha-row-highlight' : ''}">
-              <td style="width:18%;">
-                <span style="color:${GRAHA_CONFIG[pName]?.stroke || '#fff'}; font-weight:700; margin-right:4px;">●</span>
+              <td>
+                <span style="color:${GRAHA_CONFIG[pName]?.stroke || '#fff'}; font-weight:700; margin-right:5px;">●</span>
                 <strong>${pName}</strong>
               </td>
-              <td style="width:22%;">${rashiName}</td>
-              <td style="width:10%;"><strong>H${house}</strong></td>
-              <td style="width:14%;">${motionBadge}</td>
-              <td style="width:14%;">${dignityBadge}</td>
-              <td style="width:12%;">${combustionBadge}</td>
-              <td style="width:10%;">${eclipseBadge}</td>
+              <td>${rashiName}</td>
+              <td><strong>H${house}</strong></td>
+              <td>${motionBadge}</td>
+              <td>${dignityBadge}</td>
+              <td>${combustionBadge}</td>
+              <td>${eclipseBadge}</td>
             </tr>
           `;
         });
 
         this.dom.grahaTableBody.innerHTML = html;
-      }
-
-      updateActiveYogasDisplay() {
-        if (!this.dom.yogaBadges) return;
-
-        const yogas = [];
-        const rashiPlanets = {};
-
-        for (let r = 1; r <= 12; r++) rashiPlanets[r] = [];
-        for (const [pName, data] of Object.entries(this.currentState)) {
-          rashiPlanets[data.rashi].push(pName);
-        }
-
-        for (let r = 1; r <= 12; r++) {
-          const list = rashiPlanets[r];
-          if (list.includes("Sun") && list.includes("Mercury")) yogas.push(`Budhaditya Yoga (${RASHI_NAMES[r].split(" ")[0]})`);
-          if (list.includes("Mars") && (list.includes("Rahu") || list.includes("Ketu"))) yogas.push(`Angarak Yoga (${RASHI_NAMES[r].split(" ")[0]})`);
-          if (list.includes("Sun") && (list.includes("Rahu") || list.includes("Ketu"))) yogas.push(`Grahan Dosha (${RASHI_NAMES[r].split(" ")[0]})`);
-          if (list.includes("Jupiter") && list.includes("Rahu")) yogas.push(`Guru Chandal Yoga (${RASHI_NAMES[r].split(" ")[0]})`);
-        }
-
-        const activeEv = this.activeEventIndex >= 0 ? PLANETARY_EVENTS_2027[this.activeEventIndex] : null;
-        if (activeEv && activeEv.isSuryaGrahan) yogas.unshift(`🌑 SURYA GRAHAN ACTIVE`);
-        else if (activeEv && activeEv.changeType === "GRAHAN_END") yogas.unshift(`✨ GRAHAN MOKSHA (SOLAR DISC RESTORED)`);
-
-        if (yogas.length === 0) yogas.push("Standard Transit Alignment");
-
-        this.dom.yogaBadges.innerHTML = yogas.map(y => `<span class="yoga-badge">${y}</span>`).join("");
       }
 
       renderEventsFeed() {
@@ -1703,6 +1429,7 @@
         } else {
           if (this.dom.btnPlay) {
             this.dom.btnPlay.textContent = "▶ Play";
+            this.dom.btnPlay.classList.remove("btn-primary");
           }
           clearInterval(this.playTimer);
           this.playTimer = null;
@@ -1737,7 +1464,7 @@
       }
     }
 
-    // Fail-safe bootstrap: Executes regardless of when scripts load or iframes embed
+    // Fail-safe execution guard
     function startSimulator() {
       try {
         if (!window.astrologyApp) {
